@@ -17,7 +17,11 @@ jobs:
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
+    steps:  
+        # Checks-out the repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Check Out Repo 
+        uses: actions/checkout@v2
+        
       - name: Cache Docker layers
         uses: actions/cache@v2
         with:
@@ -25,10 +29,6 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-            
-        # Checks-out the repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Check Out Repo 
-        uses: actions/checkout@v2
 
         # Use Personal Access Token (PAT) to access docker hub
       - name: Login to Docker Hub
@@ -36,6 +36,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+        
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2

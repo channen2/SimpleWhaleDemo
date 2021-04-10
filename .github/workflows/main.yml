@@ -3,10 +3,11 @@
 name: CI to Docker Hub
 
 # Controls when the action will run. 
+# Workflow activates only when a tagged version in the form vn.n.n is released
 on:
-  # Triggers the workflow on push events but only for the master branch
   push:
-    branches: [ master ]
+    tags:
+      - "v*.*.*"
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel

@@ -3,6 +3,7 @@
 name: CI to Docker Hub
 
 # Controls when the action will run. 
+# Workflow activates only when a tagged version in the form vn.n.n is released
 on:
   push:
     tags:
